@@ -5,3 +5,4 @@ clo	CLO:0000019	immortal cell line cell	CLO:0000001	cell line cell
 clo	CLO:0000031	cell line	OBI:0001905	secondary cultured cell population	
 clo	CLO:0009828	immortal cell line	CLO:0000031	cell line	
 clo	CLO:0009829	mortal cell line	CLO:0000031	cell line	
+clo	CLO:0000008	细胞库			ancestors
