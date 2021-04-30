@@ -37,3 +37,4 @@ cl	CL:0000842	mononuclear cell	CL:0000000	cell
 cl	CL:0002192	metamyelocyte			ancestors
 cl	CL:0002193	myelocyte			ancestors
 cl	CL:0011114	segmented neutrophil of bone marrow			ancestors
+cl	CL:0000790	immature alpha-beta T cell			ancestors
