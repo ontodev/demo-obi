@@ -7,6 +7,21 @@
 # WARN: This file contains significant whitespace, i.e. tabs!
 # Ensure that your text editor shows you those characters.
 
+### Workflow
+#
+# 1. create a new branch from the latest version of "master"
+# 2. make your changes
+# 5. `make sort` and normalize tables for cleaner diffs
+# 7. `make test` your changes
+# 6. inspect your changes with `git status` and `git diff`
+# 8. `git commit --all --message "Description, issue #123"`
+#    your changes with a message
+#    (it's good to include an issue number)
+# 9. `git push --set-upstream origin your-branch-name`
+#    your commits to GitHub
+#
+# Other:
+# - `make dbs` update databases
 
 ### Configuration
 #
@@ -111,6 +126,15 @@ build/%.db: src/scripts/prefixes.sql build/%.owl.gz | build/rdftab
 	zcat < $(word 2,$^) | ./build/rdftab $@
 	sqlite3 $@ "CREATE INDEX idx_stanza ON statements (stanza);"
 	sqlite3 $@ "ANALYZE;"
+	
+build/obi.db: src/scripts/prefixes.sql obi.owl | build/rdftab
+	rm -rf $@
+	sqlite3 $@ < $<
+	./build/rdftab $@ < $(word 2,$^)
+
+IMPORT_DBS := $(foreach I,$(IMPORTS),build/$(I).db)
+.PHONY: dbs
+dbs: $(IMPORT_DBS) build/obi.db
 
 # Extract NCBITaxon with oio:hasExactSynonym mapped to IAO:0000118.
 build/ncbitaxon_imports.ttl: build/ncbitaxon.db src/ontology/imports/config.tsv src/ontology/imports/ncbitaxon_terms.tsv
